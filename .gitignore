@@ -1,0 +1,39 @@
+# Versionnés : TP/, TP_corrige/, Docs/sources_data.md, requirements.txt, README.md, .gitignore
+# Tout le reste (répertoires locaux, données, supports) est ignoré.
+
+# Racine : ignorer puis réautoriser l’essentiel
+/*
+!.gitignore
+!README.md
+!requirements.txt
+
+# Notebooks
+!/TP/
+!/TP/**/*
+!/TP_corrige/
+!/TP_corrige/**/*
+
+# Un seul fichier dans Docs/
+!/Docs/
+/Docs/*
+!/Docs/sources_data.md
+
+# Répertoires locaux (non versionnés)
+donnees/
+Diaporama_cours/
+_scripts/
+
+# Python / Jupyter
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
