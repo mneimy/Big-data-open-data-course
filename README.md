@@ -16,10 +16,8 @@ Dépôt des **notebooks de TP**, des **sources de données** (`Docs/sources_data
 
 | Élément | Rôle |
 |---------|------|
-| `TP_corrige/` | Notebooks **corrigés** (formateur uniquement, non partagés via Git) |
+| `TP_corrige/` | Notebooks **corrigés** (à récupérer à la fin du cours) |
 | `donnees/` | CSV / Parquet téléchargés (voir `Docs/sources_data.md`) |
-| `Diaporama_cours/` | Support de présentation (diaporama) |
-| `_scripts/` | Script utilitaire `write_notebooks.py` (régénération des notebooks si besoin) |
 
 Créer le dossier `donnees/` à la racine du projet avant les TP qui lisent des fichiers locaux.
 
