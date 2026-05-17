@@ -1,4 +1,4 @@
-# Versionnés : TP/, TP_corrige/, Docs/sources_data.md, requirements.txt, README.md, .gitignore
+# Versionnés : TP/, Docs/sources_data.md, requirements.txt, README.md, .gitignore
 # Tout le reste (répertoires locaux, données, supports) est ignoré.
 
 # Racine : ignorer puis réautoriser l’essentiel
@@ -10,8 +10,6 @@
 # Notebooks
 !/TP/
 !/TP/**/*
-!/TP_corrige/
-!/TP_corrige/**/*
 
 # Un seul fichier dans Docs/
 !/Docs/
@@ -19,6 +17,7 @@
 !/Docs/sources_data.md
 
 # Répertoires locaux (non versionnés)
+TP_corrige/
 donnees/
 Diaporama_cours/
 _scripts/

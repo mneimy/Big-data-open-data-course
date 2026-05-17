@@ -9,7 +9,6 @@ Dépôt des **notebooks de TP**, des **sources de données** (`Docs/sources_data
 | Élément | Rôle |
 |---------|------|
 | `TP/jour1/`, `TP/jour2/` | Notebooks **énoncés** (modules 1 à 5) |
-| `TP_corrige/jour1/`, `TP_corrige/jour2/` | Notebooks **corrigés** (même découpage) |
 | `Docs/sources_data.md` | Liens et jeux de données par TP |
 | `requirements.txt` | Dépendances Python du projet |
 
@@ -17,6 +16,7 @@ Dépôt des **notebooks de TP**, des **sources de données** (`Docs/sources_data
 
 | Élément | Rôle |
 |---------|------|
+| `TP_corrige/` | Notebooks **corrigés** (formateur uniquement, non partagés via Git) |
 | `donnees/` | CSV / Parquet téléchargés (voir `Docs/sources_data.md`) |
 | `Diaporama_cours/` | Support de présentation (diaporama) |
 | `_scripts/` | Script utilitaire `write_notebooks.py` (régénération des notebooks si besoin) |
@@ -36,7 +36,7 @@ Créer le dossier `donnees/` à la racine du projet avant les TP qui lisent des 
 | `TP/jour2/TP_4_2_Dashboard_IVAL.ipynb` | 4.2 (checklist Power BI / Tableau) |
 | `TP/jour2/TP_5_1_Strategie_Rectorat.ipynb` | 5.1 |
 
-Les versions corrigées sont dans `TP_corrige/` (mêmes noms de fichiers). Les URL et jeux de données sont centralisés dans `Docs/sources_data.md`.
+Les URL et jeux de données sont centralisés dans `Docs/sources_data.md`.
 
 ---
 
@@ -128,7 +128,7 @@ source .venv/bin/activate
 jupyter lab
 ```
 
-Ouvrir les notebooks dans `TP\jour1\`, `TP\jour2\` (ou `TP_corrige\` pour les corrigés). Si un notebook ne trouve pas `donnees\`, vérifier dans Jupyter le dossier d’origine du serveur (*File → Open from Path* ou redémarrer après un `cd` correct vers la racine).
+Ouvrir les notebooks dans `TP\jour1\` ou `TP\jour2\`. Si un notebook ne trouve pas `donnees\`, vérifier dans Jupyter le dossier d’origine du serveur (*File → Open from Path* ou redémarrer après un `cd` correct vers la racine).
 
 ---
 
