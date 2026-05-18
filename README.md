@@ -27,7 +27,7 @@ Créer le dossier `donnees/` à la racine du projet avant les TP qui lisent des 
 |---------|-----|
 | `TP/jour1/TP_1_1_Comparaison_donnees_educatifs.ipynb` | 1.1 |
 | `TP/jour1/TP_2_1_PySpark_Annuaire.ipynb` | 2.1 |
-| `TP/jour1/TP_2_2_HDFS_Hadoop.ipynb` | 2.2 (guide HDFS / Docker) |
+| `TP/jour1/TP_2_2_HDFS_Hadoop.ipynb` | 2.2 (guide HDFS / Hadoop sur la VM) |
 | `TP/jour2/TP_3_1_PostgreSQL_Annuaire.ipynb` | 3.1 |
 | `TP/jour2/TP_3_2_DataLake_Medallion.ipynb` | 3.2 |
 | `TP/jour2/TP_4_1_EDA_IVAL.ipynb` | 4.1 |
@@ -48,39 +48,21 @@ Les URL et jeux de données sont centralisés dans `Docs/sources_data.md`.
 | **Java** | **11 ou 17** (obligatoire pour PySpark en local). Windows : installer un JDK (ex. [Eclipse Temurin](https://adoptium.net/) ou Oracle JDK), puis définir `JAVA_HOME` (voir plus bas). |
 
 **Option avancée (Windows)** : exécuter Python / Jupyter dans **WSL2** (Ubuntu) revient alors aux commandes **Linux** décrites plus bas.
+*/!\ Nous utiliserons la dernière version **Python 3.14** pour la formation*
 
-### 2. Créer l’environnement virtuel
+### 2. Installer les dépendances Python
 
 Placez le dépôt dans un chemin **sans espaces** si possible (ex. `C:\dev\Big_data_open_data`) pour limiter les soucis avec certains outils.
 
-**Windows (PowerShell ou CMD)** — à la racine du dépôt :
-
-```powershell
-cd C:\chemin\vers\Big_data_open_data
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-Si l’activation PowerShell est bloquée par la stratégie d’exécution :
-
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-```
-
-Ou utilisez **CMD** :
+**Windows (PowerShell ou CMD)** — à la racine du dépôt, avec le **Python déjà installé sur la VM** (pas de venv) :
 
 ```bat
 cd C:\chemin\vers\Big_data_open_data
-py -3.11 -m venv .venv
-.venv\Scripts\activate.bat
-```
-
-Puis dans les deux cas :
-
-```bat
 python -m pip install -U pip
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
+
+Si la commande `python` n’est pas reconnue, essayez le lanceur Windows : `py -m pip install -U pip` puis `py -m pip install -r requirements.txt`.
 
 **macOS / Linux** (bash ou zsh) :
 
@@ -110,13 +92,16 @@ curl -L -o donnees/fr-en-indicateurs-de-resultat-des-lycees-gt_v2.csv \
 
 Le serveur Jupyter doit être lancé de façon que la **racine du dépôt** soit le répertoire de travail (les notebooks cherchent le dossier `donnees\` à partir de cette racine).
 
-**Windows** :
+**Windows** — sous Windows, la commande `jupyter` n’est souvent **pas dans le PATH** même après `pip install`. Utiliser le module Python :
 
 ```bat
 cd C:\chemin\vers\Big_data_open_data
-.\.venv\Scripts\activate.bat
-jupyter lab
+python -m jupyter lab
 ```
+
+Si `python` n’est pas reconnu : `py -m jupyter lab`.
+
+En cas d’erreur « No module named jupyter » : relancer l’installation des dépendances (`python -m pip install -r requirements.txt`), puis réessayer.
 
 **macOS / Linux** :
 
@@ -132,9 +117,9 @@ Ouvrir les notebooks dans `TP\jour1\` ou `TP\jour2\`. Si un notebook ne trouve p
 
 ## Vérifier l’installation — Spark / PySpark
 
-Dans un terminal avec le **venv activé** :
+Dans un terminal :
 
-**Windows** :
+**Windows** (Python système de la VM) :
 
 ```bat
 python -c "import pyspark; print('PySpark', pyspark.__version__)"
@@ -157,37 +142,54 @@ Les notebooks PySpark utilisent `master("local[*]")` : aucun cluster à installe
 
 ## Hadoop / HDFS (TP 2.2)
 
-Le TP 2.2 repose sur une **démonstration** : mini-cluster Hadoop (souvent via **Docker**). Il n’est pas nécessaire d’installer Hadoop sur la machine hôte si vous utilisez une image Docker fournie par le formateur.
+Le TP 2.2 repose sur une **démonstration HDFS** avec **Hadoop installé sur la VM Windows** de formation (pas de Docker). Le notebook `TP/jour1/TP_2_2_HDFS_Hadoop.ipynb` détaille les étapes.
 
-### Prérequis
+### Prérequis (VM Windows)
 
-- **Windows** : [Docker Desktop pour Windows](https://docs.docker.com/desktop/install/windows-install/) (WSL2 recommandé en backend ; suivre l’assistant d’installation Docker).
-- **macOS** : Docker Desktop.
-- **Linux** : Docker Engine + plugin Compose, ou Docker Desktop selon votre environnement.
+- **Hadoop** et le client **`hdfs`** déjà installés et présents dans le `PATH` (fourni sur la VM).
+- Variable **`HADOOP_HOME`** pointant vers l’installation Hadoop (ex. `C:\hadoop`).
+- **Java** 11 ou 17 et **`JAVA_HOME`** configurés (voir section PySpark ci-dessus).
+- Fichier CSV des effectifs VP/BTS dans `donnees\` (voir `Docs/sources_data.md`, section TP 2.2).
 
-### Vérifier Docker
+### Vérifier et démarrer Hadoop
 
-**Windows / macOS / Linux** (même syntaxe) :
+Dans **PowerShell** ou **CMD** :
 
-```bash
-docker version
-docker run --rm hello-world
+```powershell
+hdfs dfs -ls /
+jps
 ```
 
-### Lancer un environnement HDFS de test (exemple générique)
+`jps` doit afficher au minimum **NameNode** et **DataNode**. Si `hdfs dfs` échoue (NameNode injoignable), démarrer HDFS (adapter le chemin si besoin) :
 
-Les images exactes varient selon le formateur. Le notebook `TP/jour1/TP_2_2_HDFS_Hadoop.ipynb` rappelle les commandes types :
+```powershell
+%HADOOP_HOME%\sbin\start-dfs.cmd
+%HADOOP_HOME%\sbin\start-yarn.cmd
+```
 
-- copier un fichier local vers HDFS : `hdfs dfs -put ...`
-- lister : `hdfs dfs -ls /`
-- intégrité des blocs : `hdfs fsck /chemin/fichier -files -blocks`
-- interface **NameNode** (souvent port **9870** selon l’image).
+Interface web du NameNode : **http://localhost:9870**
 
-**Donnée conseillée** : jeu des effectifs VP/BTS (voir `Docs/sources_data.md`, section TP 2.2), placé dans `donnees\` puis monté ou copié dans le conteneur selon les consignes du formateur.
+### Commandes utiles (TP 2.2)
 
-### Si Docker n’est pas disponible
+Depuis la racine du dépôt, en adaptant le nom d’utilisateur Windows (`formation`) et le fichier CSV :
 
-Traiter le TP 2.2 en **salle** sur les postes prévus, ou en lecture du notebook (étapes et captures) sans exécution.
+```powershell
+hdfs dfs -mkdir -p /user/formation/data
+hdfs dfs -put .\donnees\effectifs_vp_bts.csv /user/formation/data/
+hdfs dfs -ls /user/formation/data
+hdfs fsck /user/formation/data/effectifs_vp_bts.csv -files -blocks
+```
+
+### Dépannage Windows
+
+| Problème | Piste |
+|----------|--------|
+| `'hdfs' n'est pas reconnu` | Vérifier `HADOOP_HOME` et que `%HADOOP_HOME%\bin` est dans le `PATH` ; rouvrir le terminal. |
+| Erreur de connexion au NameNode | Lancer `start-dfs.cmd` (voir ci-dessus), attendre quelques secondes, retester `hdfs dfs -ls /`. |
+| `put` : fichier introuvable | Vérifier le chemin Windows du CSV dans `donnees\` (guillemets si espaces dans le chemin). |
+| Page **9870** inaccessible | Vérifier que le NameNode tourne (`jps`). |
+
+Arrêt du cluster (fin de session) : `%HADOOP_HOME%\sbin\stop-dfs.cmd` et `stop-yarn.cmd`.
 
 ---
 
