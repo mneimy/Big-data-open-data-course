@@ -22,6 +22,23 @@ Ce fichier recense les jeux de données et liens utiles pour les travaux pratiqu
 
 ---
 
+## TP 1.2 — API data.gouv.fr & data.education.gouv.fr
+
+Notebook : `TP/jour1/TP_1_2_API_data_gouv_education.ipynb` (corrigé dans `TP_corrige/jour1/`).
+
+| Usage | URL / endpoint |
+|-------|----------------|
+| Recherche jeux (API v1) | `https://www.data.gouv.fr/api/1/datasets/?q=…` |
+| Fiche jeu | `https://www.data.gouv.fr/api/1/datasets/{id}/` |
+| Ressources (API v2) | `https://www.data.gouv.fr/api/2/datasets/{id}/resources/` |
+| Enregistrements annuaire (ODS v2.1) | `https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/records` |
+| Export CSV annuaire | `https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/exports/csv` |
+| Doc API data.gouv.fr | https://www.data.gouv.fr/fr/dataservices/api/ |
+
+**MCP Cursor** : les outils `search_datasets`, `get_dataset_info`, `list_dataset_resources` et `query_resource_data` sur le serveur `datagouv` reproduisent une partie de ce parcours depuis l’assistant.
+
+---
+
 ## TP 1.1 — Comparaison de jeux de données éducatifs
 
 ### Jeu principal : Annuaire de l'éducation
@@ -45,13 +62,21 @@ Ce fichier recense les jeux de données et liens utiles pour les travaux pratiqu
 
 ## TP 2.1 — Exploration des établissements avec PySpark
 
-**Jeu** : Annuaire de l'éducation (~65 000 établissements, CSV ~50 Mo).
+**Partie A — Annuaire** (~69 000 établissements, CSV ~40 Mo) : exploration et agrégations de base.
 
 | Usage | URL |
 |-------|-----|
 | Page data.gouv.fr | https://www.data.gouv.fr/datasets/annuaire-de-leducation/ |
 | Exploration data.education | https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/ |
 | **Export CSV direct (API v2.1)** | https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/exports/csv |
+
+**Partie B — Effectifs VP/BTS** (~310 000 lignes, CSV ~63 Mo) : comparer Spark vs pandas sur un jeu plus volumineux (même jeu que le TP 2.2).
+
+| Usage | URL |
+|-------|-----|
+| Page data.gouv.fr | https://www.data.gouv.fr/datasets/effectifs-des-eleves-en-voie-professionnelle-ou-bts-par-niveau-sexe-et-lycee-professionnel-date-dobservation-au-debut-du-mois-doctobre-chaque-annee/ |
+| Exploration data.education | https://data.education.gouv.fr/explore/dataset/fr-en-lycee_pro-effectifs-niveau-sexe-mef/ |
+| **Export CSV direct (API v2.1)** | https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-lycee_pro-effectifs-niveau-sexe-mef/exports/csv |
 
 ---
 

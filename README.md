@@ -26,6 +26,7 @@ Créer le dossier `donnees/` à la racine du projet avant les TP qui lisent des 
 | Fichier | TP |
 |---------|-----|
 | `TP/jour1/TP_1_1_Comparaison_donnees_educatifs.ipynb` | 1.1 |
+| `TP/jour1/TP_1_2_API_data_gouv_education.ipynb` | 1.2 — API data.gouv.fr & data.education |
 | `TP/jour1/TP_2_1_PySpark_Annuaire.ipynb` | 2.1 |
 | `TP/jour1/TP_2_2_HDFS_Hadoop.ipynb` | 2.2 (guide HDFS / Hadoop sur la VM) |
 | `TP/jour2/TP_3_1_PostgreSQL_Annuaire.ipynb` | 3.1 |
